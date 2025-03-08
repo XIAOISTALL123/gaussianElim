@@ -71,6 +71,8 @@ def elim(m: list):
                 m = addConst(m, j, i, -m[j-1][i-1])
     return m
 
+#sample output
+#each entry of matrix is a row. the size of matrix corresponds to the number of columns
 matrix = [ [0, 1, -1, -2, -3], [1, 2, -1, 0, 2], [2, 4, 1, -3, -2], [1, -4, -7, -1, 19] ]
 print("Original Augmented Matrix:")
 printMatrix(matrix)
