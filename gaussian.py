@@ -1,26 +1,26 @@
 #elementary row operations
 
 def interchange(m: list, indexRowA: int, indexRowB: int) -> list:
-    print("R{A} <-> R{B}".format(A = indexRowA, B = indexRowB))
-    temp = m[indexRowB - 1]
-    m[indexRowB - 1] = m[indexRowA - 1]
-    m[indexRowA - 1] = temp
+    print("R{A} <-> R{B}".format(A = indexRowA + 1, B = indexRowB + 1))
+    temp = m[indexRowB]
+    m[indexRowB] = m[indexRowA]
+    m[indexRowA] = temp
     printMatrix(m)
     print()
     return m
 
 def multiply(m: list, indexRow: int, constMultiple: float) -> list:
-    print("R{i} <- {c:.2f}R{i}".format(i = indexRow, c = constMultiple))
-    for i in range (len(m[indexRow-1])):
-        m[indexRow-1][i] = m[indexRow-1][i] * constMultiple
+    print("R{i} <- {c:.2f}R{i}".format(i = indexRow + 1, c = constMultiple))
+    for i in range (len(m[indexRow])):
+        m[indexRow][i] = m[indexRow][i] * constMultiple
     printMatrix(m)
     print()
     return m
 
 def addConst(m: list, indexRowAdd: int, indexRowMult: int, constMultiple: float) -> list:
-    print("R{A} <- {c:.2f}R{B} + R{A}".format(A = indexRowAdd, B = indexRowMult, c = constMultiple))
-    for i in range (len(m[indexRowAdd-1])):
-        m[indexRowAdd-1][i] = (m[indexRowMult-1][i] * constMultiple) + m[indexRowAdd-1][i]
+    print("R{A} <- {c:.2f}R{B} + R{A}".format(A = indexRowAdd + 1, B = indexRowMult + 1, c = constMultiple))
+    for i in range (len(m[indexRowAdd])):
+        m[indexRowAdd][i] = (m[indexRowMult][i] * constMultiple) + m[indexRowAdd][i]
     printMatrix(m)
     print()
     return m
@@ -36,7 +36,6 @@ def printMatrix(m: list) -> list:
 #Helper function for elim
 #Rearranges the rows: starts from indicated row number, rows with entry 0 in the column number are sent to the bottom
 def rearrangeRows(m: list, columnNumber: int, rowNumber: int) -> list:
-    columnNumber = columnNumber - 1
     rowZeroes = []
     for rowNum in range(0, len(m)):
         if m[rowNum][columnNumber] == 0:
@@ -44,7 +43,7 @@ def rearrangeRows(m: list, columnNumber: int, rowNumber: int) -> list:
         else:
             rowZeroes.append(rowNum+1)
 
-    top = rowNumber-1
+    top = rowNumber
     bottom = len(m) - 1
     while top < bottom:
         if rowZeroes[top] == -1:
@@ -52,7 +51,7 @@ def rearrangeRows(m: list, columnNumber: int, rowNumber: int) -> list:
                 bottom -= 1
             if bottom < top:
                 break
-            m = interchange(m, top+1, bottom+1)
+            m = interchange(m, top, bottom)
             tempIndex = rowZeroes[top]
             rowZeroes[top] = rowZeroes[bottom]
             rowZeroes[bottom] = tempIndex
@@ -62,18 +61,18 @@ def rearrangeRows(m: list, columnNumber: int, rowNumber: int) -> list:
 
 #performs Gaussian elimination on an augmented matrix; returns a matrix in row echelon form
 def elim(m: list):
-    for i in range(1, len(m)+1):
+    for i in range(0, len(m)):
         m = rearrangeRows(m, i, i)
-        if m[i-1][i-1] != 0 and m[i-1][i-1] != 1:
-            m = multiply(m, i, 1/(m[i-1][i-1]))
-        for j in range(i+1, len(m)+1):
-            if -m[j-1][i-1] != 0:
-                m = addConst(m, j, i, -m[j-1][i-1])
+        if m[i][i] != 0 and m[i][i] != 1:
+            m = multiply(m, i, 1/(m[i][i]))
+        for j in range(i+1, len(m)):
+            if -m[j][i] != 0:
+                m = addConst(m, j, i, -m[j][i])
     return m
 
 #sample output
 #each entry of matrix is a row. the size of matrix corresponds to the number of columns
-matrix = [ [0, 1, -1, -2, -3], [1, 2, -1, 0, 2], [2, 4, 1, -3, -2], [1, -4, -7, -1, 19] ]
+matrix = [ [1, 1, 2, 8], [-1, -2, 3, 1], [3, -7, 4, 10] ]
 print("Original Augmented Matrix:")
 printMatrix(matrix)
 print()
