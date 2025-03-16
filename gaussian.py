@@ -70,12 +70,34 @@ def elim(m: list):
                 m = addConst(m, j, i, -m[j][i])
     return m
 
+#converts a matrix in row-echelon form into row-reduced echelon form
+
+def rref(m: list):
+    lastIndex = len(m) - 1
+    for i in range(0, len(m)-1):
+        for j in range(0, len(m[lastIndex - i])):
+            if m[lastIndex - i][j] == 1:
+                indexOf1 = j
+                break
+            if m[lastIndex - i][j] != 1 and j == len(m[lastIndex - i])-1:
+                indexOf1 = -1
+        if indexOf1 == -1:
+            continue
+        else:
+            for k in range(0, lastIndex-i):
+                addConst(m, k, lastIndex-i, -m[k][indexOf1] )
+    return m
+
 #sample output
 #each entry of matrix is a row. the size of matrix corresponds to the number of columns
-matrix = [ [1, 1, 2, 8], [-1, -2, 3, 1], [3, -7, 4, 10] ]
+matrix = [ [2, -1, 3, 4, 9], [1, 0, -2, 7, 11], [3, -3, 1, 5, 8], [2, 1, 4, 4, 10] ]
 print("Original Augmented Matrix:")
 printMatrix(matrix)
 print()
 matrix = elim(matrix)
 print("Row-echelon Form: ")
+printMatrix(matrix)
+print("Gauss-Jordan reduction: ")
+matrix = rref(matrix)
+print("Reduced-row echelon form: ")
 printMatrix(matrix)
