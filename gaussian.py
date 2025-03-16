@@ -71,7 +71,6 @@ def elim(m: list):
     return m
 
 #converts a matrix in row-echelon form into row-reduced echelon form
-
 def rref(m: list):
     lastIndex = len(m) - 1
     for i in range(0, len(m)-1):
@@ -90,7 +89,11 @@ def rref(m: list):
 
 #sample output
 #each entry of matrix is a row. the size of matrix corresponds to the number of columns
-matrix = [ [2, -1, 3, 4, 9], [1, 0, -2, 7, 11], [3, -3, 1, 5, 8], [2, 1, 4, 4, 10] ]
+matrix = [ 
+    [2, -1, 3, 4, 9], 
+    [1, 0, -2, 7, 11], 
+    [3, -3, 1, 5, 8], 
+    [2, 1, 4, 4, 10] ] #insert your matrix here
 print("Original Augmented Matrix:")
 printMatrix(matrix)
 print()
