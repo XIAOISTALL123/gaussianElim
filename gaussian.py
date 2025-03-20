@@ -1,3 +1,5 @@
+EPSILON = 10 ** -12
+
 #elementary row operations
 
 def interchange(m: list, indexRowA: int, indexRowB: int) -> list:
@@ -63,10 +65,10 @@ def rearrangeRows(m: list, columnNumber: int, rowNumber: int) -> list:
 def elim(m: list):
     for i in range(0, len(m)):
         m = rearrangeRows(m, i, i)
-        if m[i][i] != 0 and m[i][i] != 1:
+        if (m[i][i] > EPSILON or m[i][i] < -EPSILON) and m[i][i] != 1:
             m = multiply(m, i, 1/(m[i][i]))
         for j in range(i+1, len(m)):
-            if -m[j][i] != 0:
+            if m[j][i] > EPSILON or m[j][i] < -EPSILON:
                 m = addConst(m, j, i, -m[j][i])
     return m
 
@@ -90,10 +92,10 @@ def rref(m: list):
 #sample output
 #each entry of matrix is a row. the size of matrix corresponds to the number of columns
 matrix = [ 
-    [2, -1, 3, 4, 9], 
-    [1, 0, -2, 7, 11], 
-    [3, -3, 1, 5, 8], 
-    [2, 1, 4, 4, 10] ] #insert your matrix here
+    [6, 0, 3, 3],
+    [1, 2, 3, 1],
+    [4, -4, -3, 1]
+    ] #insert your matrix here
 print("Original Augmented Matrix:")
 printMatrix(matrix)
 print()
